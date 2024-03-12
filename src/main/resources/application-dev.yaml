@@ -1,0 +1,29 @@
+logging:
+  file:
+    name: crm-web.log
+  level:
+    root: info
+server:
+  port: 8080
+spring:
+  output:
+    ansi:
+      enabled: always
+  flyway:
+    driver-class-name: org.postgresql.driver
+    baseline-on-migrate: true
+    baseline-version: "0"
+
+  config:
+    import:
+      - optional:file:.env[.properties]
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}  
+
+jwt:
+  private:
+    key: classpath:app.key
+  public:
+    key: classpath:app.pub
