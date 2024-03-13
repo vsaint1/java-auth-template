@@ -1,9 +1,10 @@
 package com.vsantos1.tmpl.web.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +19,17 @@ public class CategoryController {
 
     private CategoryService categoryService;
 
-    private static Logger logger = LoggerFactory.getLogger(CategoryController.class);
-
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Category>> listAll() {
+        return ResponseEntity.ok().body(this.categoryService.findAll());
+    }
+
     @PostMapping("/new")
     public ResponseEntity<Category> create(@RequestBody Category category) {
-        logger.error("Error creating category: {}", category.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.save(category));
     }
 
